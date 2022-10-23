@@ -401,7 +401,8 @@ class NavigationActivity : AppCompatActivity() {
                 .applyDefaultNavigationOptions()
                 .applyLanguageAndVoiceUnitOptions(this)
                 .coordinatesList(addedWaypoints.coordinatesList())
-                .waypointIndicesList(addedWaypoints.waypointsIndices())
+                //.waypointIndicesList(addedWaypoints.waypointsIndices())
+                .waypointIndicesList(listOf(0, addedWaypoints.coordinatesList().size()-1))
                 .waypointNamesList(addedWaypoints.waypointsNames())
                 .build(),
             object : RouterCallback {

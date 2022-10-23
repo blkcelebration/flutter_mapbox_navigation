@@ -330,6 +330,7 @@ open class TurnByTurn(ctx: Context, act: Activity, bind: NavigationActivityBindi
                 .applyDefaultNavigationOptions()
                 .applyLanguageAndVoiceUnitOptions(context)
                 .coordinatesList(wayPoints)
+                .waypointIndicesList(listOf(0, wayPoints.size()-1))
                 .language(navigationLanguage)
                 .alternatives(alternatives)
                 .profile(navigationMode)
