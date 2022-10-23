@@ -402,7 +402,7 @@ class NavigationActivity : AppCompatActivity() {
                 .applyLanguageAndVoiceUnitOptions(this)
                 .coordinatesList(addedWaypoints.coordinatesList())
                 //.waypointIndicesList(addedWaypoints.waypointsIndices())
-                .waypointIndicesList(listOf(0, addedWaypoints.coordinatesList().size()-1))
+                .waypointIndicesList(listOf(0, addedWaypoints.coordinatesList().size-1))
                 .waypointNamesList(addedWaypoints.waypointsNames())
                 .build(),
             object : RouterCallback {
