@@ -1,28 +1,20 @@
 part of navigation;
 
-/// Turn-By-Turn Navigation Provider
-class MapBoxNavigation {
-  factory MapBoxNavigation({ValueSetter<RouteEvent>? onRouteEvent}) {
-    if (_instance == null) {
-      final MethodChannel methodChannel =
-          const MethodChannel('flutter_mapbox_navigation');
-      final EventChannel eventChannel =
-          const EventChannel('flutter_mapbox_navigation/events');
-      _instance =
-          MapBoxNavigation.private(methodChannel, eventChannel, onRouteEvent);
-    }
-    return _instance!;
+/// Controller for a single MapBox Navigation instance running on the host platform.
+class MapBoxNavigationViewController {
+  late MethodChannel _methodChannel;
+  late EventChannel _eventChannel;
+
+  ValueSetter<RouteEvent>? _routeEventNotifier;
+
+  MapBoxNavigationViewController(
+      int id, ValueSetter<RouteEvent>? eventNotifier) {
+    _methodChannel = new MethodChannel('flutter_mapbox_navigation/$id');
+    _methodChannel.setMethodCallHandler(_handleMethod);
+
+    _eventChannel = EventChannel('flutter_mapbox_navigation/$id/events');
+    _routeEventNotifier = eventNotifier;
   }
-
-  @visibleForTesting
-  MapBoxNavigation.private(
-      this._methodChannel, this._routeEventchannel, this._routeEventNotifier);
-
-  static MapBoxNavigation? _instance;
-
-  final MethodChannel _methodChannel;
-  final EventChannel _routeEventchannel;
-  final ValueSetter<RouteEvent>? _routeEventNotifier;
 
   Stream<RouteEvent>? _onRouteEvent;
   late StreamSubscription<RouteEvent> _routeEventSubscription;
@@ -42,20 +34,16 @@ class MapBoxNavigation {
       .invokeMethod<double>('getDurationRemaining')
       .then<double>((dynamic result) => result);
 
-  ///Show the Navigation View and Begins Direction Routing
+  ///Build the Route Used for the Navigation
   ///
-  /// [wayPoints] must not be null and have at least 2 items. A collection of [WayPoint](longitude, latitude and name). Must be at least 2 or at most 25. Cannot use drivingWithTraffic mode if more than 3-waypoints.
+  /// [wayPoints] must not be null. A collection of [WayPoint](longitude, latitude and name). Must be at least 2 or at most 25. Cannot use drivingWithTraffic mode if more than 3-waypoints.
   /// [options] options used to generate the route and used while navigating
-  /// Begins to generate Route Progress
   ///
-  int currentLegIndex = 0;
-  int legsCount = 0;
-  Future startNavigation(
-      {required List<WayPoint> wayPoints,
-      required MapBoxOptions options}) async {
+  Future<bool> buildRoute(
+      {required List<WayPoint> wayPoints, MapBoxOptions? options}) async {
     assert(wayPoints.length > 1);
-    if (Platform.isIOS && wayPoints.length > 3) {
-      assert(options.mode != MapBoxNavigationMode.drivingWithTraffic,
+    if (Platform.isIOS && wayPoints.length > 3 && options?.mode != null) {
+      assert(options!.mode != MapBoxNavigationMode.drivingWithTraffic,
           "Error: Cannot use drivingWithTraffic Mode when you have more than 3 Stops");
     }
     List<Map<String, Object?>> pointList = [];
@@ -78,16 +66,32 @@ class MapBoxNavigation {
     var wayPointMap =
         Map.fromIterable(pointList, key: (e) => i++, value: (e) => e);
 
-    var args = options.toMap();
+    Map<String, dynamic> args = Map<String, dynamic>();
+    if (options != null) args = options.toMap();
     args["wayPoints"] = wayPointMap;
 
-    currentLegIndex = 0;
-    legsCount = wayPoints.length - 1;
-
     _routeEventSubscription = _streamRouteEvent!.listen(_onProgressData);
-    await _methodChannel
-        .invokeMethod('startNavigation', args)
-        .then<String>((dynamic result) => result);
+    return await _methodChannel
+        .invokeMethod('buildRoute', args)
+        .then<bool>((dynamic result) => result);
+  }
+
+  /// starts listening for events
+  Future<void> initialize() async {
+    _routeEventSubscription = _streamRouteEvent!.listen(_onProgressData);
+  }
+
+  /// Clear the built route and resets the map
+  Future<bool?> clearRoute() async {
+    return _methodChannel.invokeMethod('clearRoute', null);
+  }
+
+  /// Starts the Navigation
+  Future<bool?> startNavigation({MapBoxOptions? options}) async {
+    Map<String, dynamic>? args;
+    if (options != null) args = options.toMap();
+    //_routeEventSubscription = _streamRouteEvent.listen(_onProgressData);
+    return _methodChannel.invokeMethod('startNavigation', args);
   }
 
   ///Ends Navigation and Closes the Navigation View
@@ -96,28 +100,25 @@ class MapBoxNavigation {
     return success;
   }
 
-  /// Will download the navigation engine and the user's region to allow offline routing
-  Future<bool?> enableOfflineRouting() async {
-    var success =
-        await _methodChannel.invokeMethod('enableOfflineRouting', null);
-    return success;
+  /// Generic Handler for Messages sent from the Platform
+  Future<dynamic> _handleMethod(MethodCall call) async {
+    switch (call.method) {
+      case 'sendFromNative':
+        String? text = call.arguments as String?;
+        return new Future.value("Text from native: $text");
+    }
   }
 
   void _onProgressData(RouteEvent event) {
     if (_routeEventNotifier != null) _routeEventNotifier!(event);
 
-    if (event.eventType == MapBoxEvent.on_arrival) {
-      if (currentLegIndex >= legsCount - 1)
-        _routeEventSubscription.cancel();
-      else
-        currentLegIndex++;
-    } else if (event.eventType == MapBoxEvent.navigation_finished)
+    if (event.eventType == MapBoxEvent.on_arrival)
       _routeEventSubscription.cancel();
   }
 
   Stream<RouteEvent>? get _streamRouteEvent {
     if (_onRouteEvent == null) {
-      _onRouteEvent = _routeEventchannel
+      _onRouteEvent = _eventChannel
           .receiveBroadcastStream()
           .map((dynamic event) => _parseRouteEvent(event));
     }
@@ -136,13 +137,3 @@ class MapBoxNavigation {
     return event;
   }
 }
-
-///Option to specify the mode of transportation.
-@Deprecated("Use MapBoxNavigationMode instead")
-enum NavigationMode { walking, cycling, driving, drivingWithTraffic }
-
-///Option to specify the mode of transportation.
-enum MapBoxNavigationMode { walking, cycling, driving, drivingWithTraffic }
-
-///Whether or not the units used inside the voice instruction's string are in imperial or metric.
-enum VoiceUnits { imperial, metric }
