@@ -111,29 +111,22 @@ class MapBoxOptions {
     addIfNonNull("animateBuildRoute", animateBuildRoute);
     addIfNonNull("longPressDestinationEnabled", longPressDestinationEnabled);
 
-    if (this.zoom != null) optionsMap['zoom'] = this.zoom;
+    // if (this.zoom != null) optionsMap['zoom'] = this.zoom;
+    optionsMap['zoom'] = 22.0;
     if (this.bearing != null) optionsMap['bearing'] = this.bearing;
     if (this.tilt != null) optionsMap['tilt'] = this.tilt;
-    if (this.alternatives != null)
-      optionsMap['alternatives'] = this.alternatives;
-    if (this.mode != null)
-      optionsMap['mode'] = this.mode?.toString().split('.').last;
-    if (this.units != null)
-      optionsMap['units'] = this.units?.toString().split('.').last;
-    if (this.allowsUTurnAtWayPoints != null)
-      optionsMap['allowsUTurnAtWayPoints'] = this.allowsUTurnAtWayPoints;
-    if (this.enableRefresh != null)
-      optionsMap['enableRefresh'] = this.enableRefresh;
+    if (this.alternatives != null) optionsMap['alternatives'] = this.alternatives;
+    if (this.mode != null) optionsMap['mode'] = this.mode?.toString().split('.').last;
+    if (this.units != null) optionsMap['units'] = this.units?.toString().split('.').last;
+    if (this.allowsUTurnAtWayPoints != null) optionsMap['allowsUTurnAtWayPoints'] = this.allowsUTurnAtWayPoints;
+    if (this.enableRefresh != null) optionsMap['enableRefresh'] = this.enableRefresh;
 
     addIfNonNull("voiceInstructionsEnabled", voiceInstructionsEnabled);
     addIfNonNull("bannerInstructionsEnabled", bannerInstructionsEnabled);
 
-    if (this.mapStyleUrlDay != null)
-      optionsMap['mapStyleUrlDay'] = this.mapStyleUrlDay;
-    if (this.mapStyleUrlNight != null)
-      optionsMap['mapStyleUrlNight'] = this.mapStyleUrlNight;
-    if (this.simulateRoute != null)
-      optionsMap['simulateRoute'] = this.simulateRoute;
+    if (this.mapStyleUrlDay != null) optionsMap['mapStyleUrlDay'] = this.mapStyleUrlDay;
+    if (this.mapStyleUrlNight != null) optionsMap['mapStyleUrlNight'] = this.mapStyleUrlNight;
+    if (this.simulateRoute != null) optionsMap['simulateRoute'] = this.simulateRoute;
     if (this.isOptimized != null) optionsMap['isOptimized'] = this.isOptimized;
 
     addIfNonNull('padding', <double?>[
@@ -149,8 +142,6 @@ class MapBoxOptions {
   Map<String, dynamic> updatesMap(MapBoxOptions newOptions) {
     final Map<String, dynamic> prevOptionsMap = toMap();
 
-    return newOptions.toMap()
-      ..removeWhere(
-          (String key, dynamic value) => prevOptionsMap[key] == value);
+    return newOptions.toMap()..removeWhere((String key, dynamic value) => prevOptionsMap[key] == value);
   }
 }
