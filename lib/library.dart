@@ -20,5 +20,5 @@ part 'embedded/view.dart';
 part 'embedded/controller.dart';
 
 bool _isNullOrZero(dynamic val) {
-  return val == 0.0 || val == null;
+  return val == 0.0 || val == null; // init branch
 }
