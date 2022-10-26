@@ -194,7 +194,8 @@ class FlutterMapViewFactory :
         var mapStyleUrlNight: String? = null
         var navigationLanguage = "en"
         var navigationVoiceUnits = DirectionsCriteria.IMPERIAL
-        var zoom = 15.0
+        // var zoom = 15.0
+        var zoom = 22.0
         var bearing = 0.0
         var tilt = 0.0
         var distanceRemaining: Float? = null
@@ -326,7 +327,8 @@ class FlutterMapViewFactory :
 
     private fun finishNavigation(isOffRouted: Boolean = false) {
 
-        zoom = 15.0
+        // zoom = 15.0
+        zoom = 22.0
         bearing = 0.0
         tilt = 0.0
         isNavigationCanceled = true
@@ -386,7 +388,8 @@ class FlutterMapViewFactory :
         initialLatitude = arguments["initialLatitude"] as? Double
         initialLongitude = arguments["initialLongitude"] as? Double
         
-        val zm = arguments["zoom"] as? Double
+        // val zm = arguments["zoom"] as? Double
+        val zm = 22.0 as Double
         if(zm != null)
             zoom = zm
 
@@ -492,7 +495,8 @@ class FlutterMapViewFactory :
     private fun moveCamera(location: LatLng) {
         val cameraPosition = CameraPosition.Builder()
                 .target(location)
-                .zoom(zoom)
+                // .zoom(zoom)
+                .zoom(22.0)
                 .bearing(bearing)
                 .tilt(tilt)
                 .build()
