@@ -63,10 +63,34 @@ class MapBoxNavigation {
     }
     var i = 0;
     var wayPointMap = Map.fromIterable(pointList, key: (e) => i++, value: (e) => e);
-
     var args = options.toMap();
+
+    // Added for testing
+    args = MapBoxOptions(
+      allowsUTurnAtWayPoints: options.allowsUTurnAtWayPoints,
+      animateBuildRoute: options.animateBuildRoute,
+      bannerInstructionsEnabled: options.bannerInstructionsEnabled,
+      bearing: options.bearing,
+      alternatives: options.alternatives,
+      enableFreeDriveMode: false,
+      enableRefresh: options.enableRefresh,
+      initialLatitude: options.initialLatitude,
+      initialLongitude: options.initialLongitude,
+      isOptimized: options.isOptimized,
+      language: options.language,
+      longPressDestinationEnabled: options.longPressDestinationEnabled,
+      mapStyleUrlDay: options.mapStyleUrlDay,
+      mapStyleUrlNight: options.mapStyleUrlNight,
+      mode: MapBoxNavigationMode.walking,
+      padding: options.padding,
+      simulateRoute: options.simulateRoute,
+      tilt: options.tilt,
+      units: options.units,
+      voiceInstructionsEnabled: options.voiceInstructionsEnabled,
+      zoom: 22,
+    ).toMap();
+
     args["wayPoints"] = wayPointMap;
-    args["zoom"] = 22;
 
     currentLegIndex = 0;
     legsCount = wayPoints.length - 1;
