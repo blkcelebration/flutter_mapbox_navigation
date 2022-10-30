@@ -274,20 +274,7 @@ class NavigationFragment : Fragment(), OnNavigationReadyCallback,
     }
 
     private fun getInitialCameraPosition(): CameraPosition {
-        if(currentRoute == null)
-            return CameraPosition.Builder()
-                    .zoom(22.0)
-                    .bearing(FlutterMapboxNavigationPlugin.bearing)
-                    .tilt(FlutterMapboxNavigationPlugin.tilt)
-                    .build()
-
-        val originCoordinate = currentRoute?.routeOptions()?.coordinates()?.get(0)
-        return CameraPosition.Builder()
-                .target(LatLng(originCoordinate!!.latitude(), originCoordinate.longitude()))
-                .zoom(22.0)
-                .bearing(FlutterMapboxNavigationPlugin.bearing)
-                .tilt(FlutterMapboxNavigationPlugin.tilt)
-                .build()
+        return CameraPosition.Builder().zoom(22.0).bearing(FlutterMapboxNavigationPlugin.bearing).tilt(FlutterMapboxNavigationPlugin.tilt).build()
     }
 
     private fun startNavigation() {
