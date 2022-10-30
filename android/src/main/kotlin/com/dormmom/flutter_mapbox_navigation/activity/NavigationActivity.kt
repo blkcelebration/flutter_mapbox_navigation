@@ -291,8 +291,11 @@ class NavigationActivity : AppCompatActivity(),
     }
 
     private fun getInitialCameraPosition(): CameraPosition {
-        if(currentRoute == null)
-            return CameraPosition.DEFAULT;
+        return CameraPosition.Builder()
+            .zoom(22.0)
+            .bearing(FlutterMapboxNavigationPlugin.bearing)
+            .tilt(FlutterMapboxNavigationPlugin.tilt)
+            .build()
 
         val originCoordinate = currentRoute?.routeOptions()?.coordinates()?.get(0)
         return CameraPosition.Builder()
