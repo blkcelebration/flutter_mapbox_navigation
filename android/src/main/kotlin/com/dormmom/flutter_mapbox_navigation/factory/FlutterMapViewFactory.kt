@@ -495,11 +495,11 @@ class FlutterMapViewFactory :
     private fun moveCamera(location: LatLng) {
         val cameraPosition = CameraPosition.Builder()
                 .target(location)
-                // .zoom(zoom)
                 .zoom(22.0)
                 .bearing(bearing)
                 .tilt(tilt)
                 .build()
+                // .zoom(zoom)
         var duration = 3000
         if(animateBuildRoute)
             duration = 1

@@ -280,11 +280,11 @@ class NavigationFragment : Fragment(), OnNavigationReadyCallback,
         val originCoordinate = route?.routeOptions()?.coordinates()?.get(0)
         return CameraPosition.Builder()
                 .target(LatLng(originCoordinate!!.latitude(), originCoordinate.longitude()))
-                // .zoom(FlutterMapboxNavigationPlugin.zoom)
                 .zoom(22.0)
                 .bearing(FlutterMapboxNavigationPlugin.bearing)
                 .tilt(FlutterMapboxNavigationPlugin.tilt)
                 .build()
+                // .zoom(FlutterMapboxNavigationPlugin.zoom)
     }
 
     private fun startNavigation() {
