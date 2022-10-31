@@ -72,7 +72,7 @@ public class FlutterMapboxNavigationPlugin: FlutterPlugin, MethodCallHandler, Ev
 
     var showAlternateRoutes: Boolean = true
     var allowsUTurnsAtWayPoints: Boolean = false
-    var navigationMode =  DirectionsCriteria.PROFILE_DRIVING_TRAFFIC
+    var navigationMode =  DirectionsCriteria.PROFILE_WALKING
     var simulateRoute = false
     var mapStyleUrlDay: String? = null
     var mapStyleUrlNight: String? = null
@@ -140,15 +140,16 @@ public class FlutterMapboxNavigationPlugin: FlutterPlugin, MethodCallHandler, Ev
     val arguments = call.arguments as? Map<String, Any>
 
     val navMode = arguments?.get("mode") as? String
-    if(navMode != null)
-    {
-      if(navMode == "walking")
-        navigationMode = DirectionsCriteria.PROFILE_WALKING;
-      else if(navMode == "cycling")
-        navigationMode = DirectionsCriteria.PROFILE_CYCLING;
-      else if(navMode == "driving")
-        navigationMode = DirectionsCriteria.PROFILE_DRIVING;
-    }
+    navigationMode = DirectionsCriteria.PROFILE_WALKING;
+    // if(navMode != null)
+    // {
+    //   if(navMode == "walking")
+    //     navigationMode = DirectionsCriteria.PROFILE_WALKING;
+    //   else if(navMode == "cycling")
+    //     navigationMode = DirectionsCriteria.PROFILE_CYCLING;
+    //   else if(navMode == "driving")
+    //     navigationMode = DirectionsCriteria.PROFILE_DRIVING;
+    // }
 
     val alternateRoutes = arguments?.get("alternatives") as? Boolean
     if(alternateRoutes != null){

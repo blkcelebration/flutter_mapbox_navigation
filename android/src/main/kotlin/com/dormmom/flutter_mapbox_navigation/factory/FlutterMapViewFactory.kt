@@ -188,7 +188,7 @@ class FlutterMapViewFactory :
         var initialLongitude: Double? = null
 
         val wayPoints: MutableList<Point> = mutableListOf()
-        var navigationMode =  DirectionsCriteria.PROFILE_DRIVING_TRAFFIC
+        var navigationMode =  DirectionsCriteria.PROFILE_WALKING
         var simulateRoute = false
         var mapStyleUrlDay: String? = null
         var mapStyleUrlNight: String? = null
@@ -353,15 +353,16 @@ class FlutterMapViewFactory :
     private fun setOptions(arguments: Map<*, *>)
     {
         val navMode = arguments["mode"] as? String
-        if(navMode != null)
-        {
-            if(navMode == "walking")
-                navigationMode = DirectionsCriteria.PROFILE_WALKING;
-            else if(navMode == "cycling")
-                navigationMode = DirectionsCriteria.PROFILE_CYCLING;
-            else if(navMode == "driving")
-                navigationMode = DirectionsCriteria.PROFILE_DRIVING;
-        }
+        navigationMode = DirectionsCriteria.PROFILE_WALKING; 
+        // if(navMode != null)
+        // {
+        //     if(navMode == "walking")
+        //         navigationMode = DirectionsCriteria.PROFILE_WALKING;
+        //     else if(navMode == "cycling")
+        //         navigationMode = DirectionsCriteria.PROFILE_CYCLING;
+        //     else if(navMode == "driving")
+        //         navigationMode = DirectionsCriteria.PROFILE_DRIVING;
+        // }
 
         val simulated = arguments["simulateRoute"] as? Boolean
         if (simulated != null) {
