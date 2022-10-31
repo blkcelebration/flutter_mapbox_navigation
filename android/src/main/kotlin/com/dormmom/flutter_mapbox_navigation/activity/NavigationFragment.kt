@@ -170,12 +170,13 @@ class NavigationFragment : Fragment(), OnNavigationReadyCallback,
                 .accessToken(accessToken)
                     .coordinates(origin, destination = destination)
                 .alternatives(FlutterMapboxNavigationPlugin.showAlternateRoutes)
-                .profile(FlutterMapboxNavigationPlugin.navigationMode)
+                .profile(DirectionsCriteria.PROFILE_WALKING)
                 .language(FlutterMapboxNavigationPlugin.navigationLanguage)
                 .voiceUnits(FlutterMapboxNavigationPlugin.navigationVoiceUnits)
                 .continueStraight(!FlutterMapboxNavigationPlugin.allowsUTurnsAtWayPoints)
                 .annotations(DirectionsCriteria.ANNOTATION_DISTANCE)
                 .build(),
+                // .profile(FlutterMapboxNavigationPlugin.navigationMode)
                     object : RoutesRequestCallback {
                         override fun onRoutesReady(routes: List<DirectionsRoute>) {
                             if (routes.isNotEmpty()) buildAndStartNavigation(routes[0]) else {

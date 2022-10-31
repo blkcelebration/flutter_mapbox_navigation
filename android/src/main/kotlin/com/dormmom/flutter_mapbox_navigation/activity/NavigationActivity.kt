@@ -119,12 +119,13 @@ class NavigationActivity : AppCompatActivity(),
                         .waypointIndicesList(listOf(0, points.size - 1))
                         .applyDefaultParams()
                         .alternatives(FlutterMapboxNavigationPlugin.showAlternateRoutes)
-                        .profile(FlutterMapboxNavigationPlugin.navigationMode)
+                        .profile(DirectionsCriteria.PROFILE_WALKING)
                         .language(FlutterMapboxNavigationPlugin.navigationLanguage)
                         .voiceUnits(FlutterMapboxNavigationPlugin.navigationVoiceUnits)
                         .continueStraight(!FlutterMapboxNavigationPlugin.allowsUTurnsAtWayPoints)
                         .annotations(DirectionsCriteria.ANNOTATION_DISTANCE)
                         .build(), routeRequestCallBack)
+                        // .profile(FlutterMapboxNavigationPlugin.navigationMode)
 
     }
 
