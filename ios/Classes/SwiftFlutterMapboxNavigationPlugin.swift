@@ -228,9 +228,9 @@ public class NavigationFactory : NSObject, FlutterStreamHandler, NavigationViewC
             self._navigationViewController!.modalPresentationStyle = .fullScreen
             self._navigationViewController!.delegate = self
             self._navigationViewController!.mapView?.localizeLabels()
+            let flutterViewController = UIApplication.shared.delegate?.window??.rootViewController as! FlutterViewController
+            flutterViewController.present(self._navigationViewController!, animated: true, completion: nil)
         }
-        let flutterViewController = UIApplication.shared.delegate?.window??.rootViewController as! FlutterViewController
-        flutterViewController.present(self._navigationViewController!, animated: true, completion: nil)
     }
     
     func continueNavigationWithWayPoints(wayPoints: [Waypoint])
