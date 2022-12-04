@@ -120,6 +120,7 @@ public class NavigationFactory : NSObject, FlutterStreamHandler, NavigationViewC
         for loc in locations
         {
             let location = Waypoint(coordinate: CLLocationCoordinate2D(latitude: loc.latitude!, longitude: loc.longitude!), name: loc.name)
+            location.separatesLegs = false // yarden added for silent waypoints test
             _wayPoints.append(location)
         }
         
@@ -738,6 +739,7 @@ public class FlutterMapboxNavigationView : NavigationFactory, MGLMapViewDelegate
         {
             let location = Waypoint(coordinate: CLLocationCoordinate2D(latitude: loc.latitude!, longitude: loc.longitude!),
                                     coordinateAccuracy: -1, name: loc.name)
+            location.separatesLegs = false // yarden added for silent waypoints test
             _wayPoints.append(location)
         }
         
