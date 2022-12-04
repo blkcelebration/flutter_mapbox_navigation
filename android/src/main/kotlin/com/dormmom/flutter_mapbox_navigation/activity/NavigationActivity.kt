@@ -116,7 +116,7 @@ class NavigationActivity : AppCompatActivity(),
                 RouteOptions.builder()
                         .accessToken(accessToken)
                         .coordinates(points)
-                        .waypointIndicesList(listOf(0, points.size)) // silent way points
+                        .waypointIndicesList(listOf(0, points.size - 1)) // silent way points
                         .applyDefaultParams()
                         .alternatives(FlutterMapboxNavigationPlugin.showAlternateRoutes)
                         .profile(DirectionsCriteria.PROFILE_WALKING)
