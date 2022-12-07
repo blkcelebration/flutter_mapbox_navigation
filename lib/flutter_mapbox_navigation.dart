@@ -11,7 +11,6 @@ class MapBoxNavigation {
     return _instance!;
   }
 
-  @visibleForTesting
   MapBoxNavigation.private(this._methodChannel, this._routeEventchannel, this._routeEventNotifier);
 
   static MapBoxNavigation? _instance;
