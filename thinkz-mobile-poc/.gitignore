@@ -1,0 +1,12 @@
+# Ignore everything in repository root 
+/*
+
+# Files to not ignore
+!/.gitignore
+!/pubspec.yaml
+
+# Folders to not ignore
+!/assets/
+!/ios/
+!/android/
+!/lib/

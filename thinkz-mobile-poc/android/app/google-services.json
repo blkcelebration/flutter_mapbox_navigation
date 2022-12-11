@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "208075285325",
+    "project_id": "mobile-thinkz",
+    "storage_bucket": "mobile-thinkz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208075285325:android:4c3a24127bfb69a76e8d04",
+        "android_client_info": {
+          "package_name": "com.dormmom.flutter_mapbox_navigation_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208075285325-atp2tln54tubt95fdb464ftl5vf7clq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU9SA49TnQRp6XDoI08cmATt3nhgyaXo0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208075285325-atp2tln54tubt95fdb464ftl5vf7clq6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
