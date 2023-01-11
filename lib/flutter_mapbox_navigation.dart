@@ -41,6 +41,7 @@ class MapBoxNavigation {
   int legsCount = 0;
   Future startNavigation({required List<WayPoint> wayPoints, required MapBoxOptions options}) async {
     assert(wayPoints.length > 1);
+    //yarden
     // if (Platform.isIOS && wayPoints.length > 3) {
     //   assert(options.mode != MapBoxNavigationMode.drivingWithTraffic, "Error: Cannot use drivingWithTraffic Mode when you have more than 3 Stops");
     // }
